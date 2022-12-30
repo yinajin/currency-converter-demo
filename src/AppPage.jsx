@@ -1,9 +1,20 @@
-import React from "react";
 import axios from "axios";
+import React from "react";
 import { useQuery } from "@tanstack/react-query";
+import { ExchangeRateTable } from "./ExchangeRateTable";
 import { CurrencyConverter } from "./CurrencyConverter";
+import styled from "styled-components";
 
-export function ExchangeRates() {
+const StyledMain = styled.main`
+  grid-area: main;
+  padding: 0.25rem;
+`;
+const StyledSideBar = styled.div`
+  grid-area: sidebar;
+  padding: 0.25rem;
+`;
+
+export function AppPage() {
   const { isLoading, error, data } = useQuery({
     queryKey: ["exchangeRateData"],
     queryFn: () =>
@@ -28,24 +39,13 @@ export function ExchangeRates() {
   }
 
   return (
-    <div>
-      <CurrencyConverter data={data} />
-      <table>
-        <thead>
-          <tr>
-            <th>Country</th>
-            <th>Exchange Rate Today</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map(entry =>
-            <tr key={entry[0]}>
-              <td>{entry[0]}</td>
-              <td>{entry[2]} {entry[1].charAt(0).toUpperCase() + entry[1].slice(1)} ({entry[3]}) = {entry[4]} CZK</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <StyledSideBar>
+        <ExchangeRateTable data={data} />
+      </StyledSideBar>
+      <StyledMain>
+        <CurrencyConverter data={data} />
+      </StyledMain>
+    </>
   );
 }

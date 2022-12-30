@@ -14,24 +14,26 @@ export function CurrencyConverter({ data }) {
     e.preventDefault();
     setResult(`${amount} CZK = ${amount / exchangeRates[currency]} ${currency}`);
   }
-  
+
+  // could use some more styling
   return (
     <div>
       <h1>Currency Converter</h1>
 
       <form onSubmit={(e) => handleSubmit(e)}>
         <label>
-          Amount
+          Amount:
           <input
             name="amount"
             type="number"
             value={amount}
             onChange={(e) => setAmount(e.target.value)} />
-          from CZK
         </label>
-        <br></br>
+        <br />
+        <label>from: CZK</label>
+        <br />
         <label>
-          To
+          To:
           <select value={currency} onChange={(e) => setCurrency(e.target.value)}>
             {
               Object.entries(currencyNames)
@@ -39,7 +41,7 @@ export function CurrencyConverter({ data }) {
             }
           </select>
         </label>
-        <br></br>
+        <br />
         <input type="submit" value="Convert" />
       </form>
 
